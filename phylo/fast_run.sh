@@ -6,7 +6,7 @@ module load intel
 module unload miniconda2
 module unload miniconda3
 module load perl
-NUM=$(wc -l ../prefix.tab | awk '{print $1}')
+NUM=$(wc -l ../expected_prefixes.lst | awk '{print $1}')
 source ../config.txt
 
 ALN=../$PREFIX.${NUM}_taxa.$HMM.aa.fasaln
