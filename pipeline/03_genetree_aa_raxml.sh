@@ -42,8 +42,18 @@ if [ ! -f $OUTPHY ]; then
     perl -p -e 's/>([^\|]+)\|/>$1 /' $PHY > $OUTDIR/$OUTPHY
 fi
 
+IFS=,
+KEEPOUT=""
+for f in $OUT
+do
+	m=$(grep -c $f $OUTDIR/$OUTPHY)
+	if [ $m -gt 0 ]; then
+		KEEPOUT="${KEEPOUT:+$KEEPOUT,}$f"
+	fi
+done
+echo "OUTGROUP is $KEEPOUT"
 pushd $OUTDIR
 echo $base
 if [ ! -f  RAxML_info.$base"_ML_PROTGAMMA" ]; then
-    $raxml -T $CPU -o $OUT -# 100 -x 221 -f a -p 31 -m PROTGAMMAAUTO -s $OUTPHY -n ${base}_ML_PROTGAMMA
+    $raxml -T $CPU -o "$KEEPOUT" -# 100 -x 221 -f a -p 31 -m PROTGAMMAAUTO -s $OUTPHY -n ${base}_ML_PROTGAMMA
 fi

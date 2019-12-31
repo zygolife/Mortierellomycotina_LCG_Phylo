@@ -18,6 +18,7 @@ fi
 
 ./PHYling_unified/PHYling init
 ./PHYling_unified/PHYling search -q parallel
-./PHYling_unified/PHYling aln -c -q parallel
+m=$(./PHYling_unified/PHYling aln -c -q slurm)
+echo "m is $m"
 pushd phylo
-sbatch --time 2:00:00 -p short fast_run.sh
+#sbatch --time 2:00:00 -p short fast_run.sh
